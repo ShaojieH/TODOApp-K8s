@@ -5,7 +5,7 @@ import redis
 app = Flask(__name__)
 CORS(app)
 
-r = redis.Redis(host='localhost', port=6379, db=0)
+r = redis.Redis(host='redis', port=6379, db=0)
 
 @app.route('/todos', methods=['GET', 'POST'])
 def todos():
@@ -42,4 +42,4 @@ def todo(id):
         return jsonify(todo)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

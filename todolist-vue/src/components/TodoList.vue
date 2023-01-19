@@ -27,26 +27,24 @@
         newTodo: ''
       }
     },
-    async created() {
+    created() {
       this.fetchTodos()
     },
     methods: {
-      async fetchTodos() {
-        const response = await axios.get('/todos')
-        this.todos = response.data
+      fetchTodos() {
+        axios.get('/todos').then(
+          response => {this.todos = response.data}
+        )
       },
-      async createTodo() {
-        axios.post('/todos', { task: this.newTodo, status: 'incomplete' })
+      createTodo() {
+        axios.post('/todos', { task: this.newTodo, status: 'incomplete' }).then(()=>this.fetchTodos())
         this.newTodo = ''
-        this.fetchTodos()
       },
-      async updateTodo(todo) {
-        axios.put(`/todos/${todo.id}`, { task: todo.task, status: todo.status })
-        this.fetchTodos()
+      updateTodo(todo) {
+        axios.put(`/todos/${todo.id}`, { task: todo.task, status: todo.status }).then(()=>this.fetchTodos())
       },
-      async deleteTodo(id) {
-        axios.delete(`/todos/${id}`)
-        this.fetchTodos()
+      deleteTodo(id) {
+        axios.delete(`/todos/${id}`).then(()=>this.fetchTodos())
       }
     }
   }
